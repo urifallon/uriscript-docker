@@ -28,7 +28,12 @@ This script performs the following steps:
 
 1. Download the script:
    ```
-   curl -O https://yourdomain.com/install_docker.sh
+   curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/refs/heads/main/uriscript-docker.sh
+
+   ```
+   Option (Vietnamese language):
+   ```
+   curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/refs/heads/main/uriscript-docker-vn.sh
    ```
 2. Make it executable and run:
    ```

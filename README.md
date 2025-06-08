@@ -28,23 +28,24 @@ This script performs the following steps:
 
 1. Download the script:
    ```
-   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker.sh && 
+   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker.sh
    ```
-   Option (Vietnamese language):
-   ```
-   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh 
-   ```
+
 2. Make it executable and run:
    ```
    chmod +x uriscript-docker.sh
    ./uriscript-docker.sh
    ```
-   Option (Vietnamese language):
-   ```
-   chmod +x uriscript-docker-vn.sh
-   ./uriscript-docker-vn.sh
-   ```
+   
+## 🇻🇳 Vietnamese Version
 
+A Vietnamese version of this script is available [here](https://yourdomain.com/nvidia_cuda_installer_vn.sh), or you can run:
+
+```bash
+mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh 
+chmod +x uriscript-docker-vn.sh
+./uriscript-docker-vn.sh
+```
 ---
 
 ## 🧰 Useful Docker Commands

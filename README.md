@@ -39,8 +39,8 @@ This script performs the following steps:
    chmod +x uriscript-docker.sh
    ./uriscript-docker.sh
    ```
-   ```
    Option (Vietnamese language):
+   ```
    chmod +x uriscript-docker-vn.sh
    ./uriscript-docker-vn.sh
    ```

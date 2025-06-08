@@ -35,6 +35,7 @@ This script performs the following steps:
    mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh && bash uriscript-docker-vn.sh
    ```
 2. Make it executable and run:
+   ```
    chmod +x uriscript-docker.sh
    ./uriscript-docker.sh
    Option (Vietnamese language):

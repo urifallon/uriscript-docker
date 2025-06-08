@@ -28,11 +28,11 @@ This script performs the following steps:
 
 1. Download the script:
    ```
-   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker.sh && bash uriscript-docker.sh
+   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker.sh && 
    ```
    Option (Vietnamese language):
    ```
-   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh && bash uriscript-docker-vn.sh
+   mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh 
    ```
 2. Make it executable and run:
    ```

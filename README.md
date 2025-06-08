@@ -39,7 +39,7 @@ This script performs the following steps:
    
 ## 🇻🇳 Vietnamese Version
 
-A Vietnamese version of this script is available [here](https://yourdomain.com/nvidia_cuda_installer_vn.sh), or you can run:
+A Vietnamese version of this script is available [here](https://github.com/urifallon/uriscript-docker/blob/main/uriscript-docker-vn.sh), or you can run:
 
 ```bash
 mkdir -p uriscript && cd uriscript && curl -O https://raw.githubusercontent.com/urifallon/uriscript-docker/main/uriscript-docker-vn.sh 

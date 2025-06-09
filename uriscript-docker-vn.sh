@@ -6,7 +6,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 echo "==> Gỡ Docker cũ (nếu có)"
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get remove -y docker docker.io containerd runc
 
 echo "==> Cài gói phụ thuộc"
 sudo apt-get install -y ca-certificates curl gnupg lsb-release

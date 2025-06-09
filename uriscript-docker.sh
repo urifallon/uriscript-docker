@@ -1,43 +1,51 @@
 #!/bin/bash
 set -e
 
+# Kiểm tra chạy bằng sudo
+if [ "$EUID" -ne 0 ]; then
+  echo "❌ Please run this script with sudo:"
+  echo "   sudo $0"
+  exit 1
+fi
+
 echo "==> Updating system"
-sudo apt-get update -y
-sudo apt-get upgrade -y
+apt-get update -y
+apt-get upgrade -y
 
 echo "==> Removing old Docker versions"
-sudo apt-get remove -y docker docker.io containerd runc
+apt-get remove -y docker docker.io containerd runc || true
 
-echo "==> Installing dependencies"
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
+echo "==> Installing required packages"
+apt-get install -y ca-certificates curl gnupg lsb-release
 
-echo "==> Adding Docker GPG key and repo"
-sudo install -m 0755 -d /etc/apt/keyrings
+echo "==> Adding Docker's GPG key"
+install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+  gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
 
-echo "==> Setting up Docker repository"
+echo "==> Adding Docker repository"
 echo \
   "deb [arch=$(dpkg --print-architecture) \
   signed-by=/etc/apt/keyrings/docker.gpg] \
   https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 
-echo "==> Installing Docker"
-sudo apt-get update -y
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+echo "==> Installing Docker Engine"
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 echo "==> Enabling and starting Docker"
-sudo systemctl enable docker
-sudo systemctl start docker
+systemctl enable docker
+systemctl start docker
 
-real_user=$(logname)
-echo "==> Current user: $real_user"
-sudo usermod -aG docker $real_user
+# Gán Docker group cho user thực
+real_user="${SUDO_USER:-$(whoami)}"
+echo "==> Adding $real_user to docker group"
+usermod -aG docker "$real_user"
 
 echo "==> Docker version:"
 docker --version
 
-echo "==> INSTALLATION COMPLETE. Please log out and log back in to apply Docker group membership."
+echo "✅ INSTALLATION COMPLETE."
+echo "🔁 Please log out and log back in (or run 'newgrp docker') to apply Docker group permissions."

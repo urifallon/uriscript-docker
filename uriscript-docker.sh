@@ -6,7 +6,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 echo "==> Removing old Docker versions"
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get remove -y docker docker.io containerd runc
 
 echo "==> Installing dependencies"
 sudo apt-get install -y ca-certificates curl gnupg lsb-release

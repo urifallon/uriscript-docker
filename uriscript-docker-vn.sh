@@ -1,43 +1,51 @@
 #!/bin/bash
 set -e
 
+# Kiểm tra nếu không chạy bằng sudo thì cảnh báo
+if [ "$EUID" -ne 0 ]; then
+  echo "❌ Vui lòng chạy script này với quyền root (sudo):"
+  echo "   sudo $0"
+  exit 1
+fi
+
 echo "==> Cập nhật hệ thống"
-sudo apt-get update -y
-sudo apt-get upgrade -y
+apt-get update -y
+apt-get upgrade -y
 
 echo "==> Gỡ Docker cũ (nếu có)"
-sudo apt-get remove -y docker docker.io containerd runc
+apt-get remove -y docker docker.io containerd runc || true
 
-echo "==> Cài gói phụ thuộc"
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
+echo "==> Cài đặt các gói phụ thuộc"
+apt-get install -y ca-certificates curl gnupg lsb-release
 
-echo "==> Thêm GPG key và repo Docker"
-sudo install -m 0755 -d /etc/apt/keyrings
+echo "==> Thêm GPG key và repository chính thức của Docker"
+install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+  gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
 
-echo "==> Thêm repository Docker"
+echo "==> Cấu hình repository Docker"
 echo \
   "deb [arch=$(dpkg --print-architecture) \
   signed-by=/etc/apt/keyrings/docker.gpg] \
   https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 
 echo "==> Cài đặt Docker"
-sudo apt-get update -y
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-echo "==> Kích hoạt Docker"
-sudo systemctl enable docker
-sudo systemctl start docker
+echo "==> Kích hoạt và khởi động Docker"
+systemctl enable docker
+systemctl start docker
 
-real_user=$(logname)
+# Gán quyền nhóm docker cho người dùng thực
+real_user="${SUDO_USER:-$(whoami)}"
 echo "==> Người dùng đang đăng nhập: $real_user"
-sudo usermod -aG docker $real_user
+usermod -aG docker "$real_user"
 
-echo "==> Docker version:"
+echo "==> Phiên bản Docker:"
 docker --version
 
-echo "==> CÀI ĐẶT HOÀN TẤT. Vui lòng đăng xuất và đăng nhập lại."
+echo "✅ CÀI ĐẶT HOÀN TẤT!"
+echo "🔁 Vui lòng đăng xuất và đăng nhập lại (hoặc chạy 'newgrp docker') để áp dụng quyền nhóm Docker."
